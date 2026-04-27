@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+/* Enable class-based dark mode: any element under .dark on <html> picks up
+   `dark:` variants. Theme is toggled by main.tsx based on the `?theme=`
+   URL parameter (initial) and `theme` postMessages from the parent frame. */
+@custom-variant dark (&:where(.dark, .dark *));

@@ -13,7 +13,6 @@ export function Analysis({ latestResult }: AnalysisProps) {
   const [feedback, setFeedback] = useState("");
   const [showSolution, setShowSolution] = useState(false);
 
-  // Reset state when new result comes in
   useEffect(() => {
     setGuess("");
     setAttempts(0);
@@ -24,7 +23,7 @@ export function Analysis({ latestResult }: AnalysisProps) {
 
   if (!latestResult) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 text-center text-slate-500 py-8 h-full flex items-center justify-center min-h-[200px]">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 text-center text-slate-500 py-8 h-full flex items-center justify-center min-h-[200px] dark:bg-slate-900 dark:border-slate-800 dark:text-slate-400">
         Run an experiment to unlock the analysis module.
       </div>
     );
@@ -32,13 +31,13 @@ export function Analysis({ latestResult }: AnalysisProps) {
 
   if (!latestResult.didSlide || latestResult.calculatedMuk === null || latestResult.time === null) {
     return (
-      <div className="bg-orange-50 rounded-xl border border-orange-200 p-4 h-full flex flex-col justify-center min-h-[200px]">
-        <h3 className="font-bold text-orange-800 flex items-center gap-2 mb-2">
+      <div className="bg-orange-50 rounded-xl border border-orange-200 p-4 h-full flex flex-col justify-center min-h-[200px] dark:bg-orange-950/30 dark:border-orange-900">
+        <h3 className="font-bold text-orange-800 flex items-center gap-2 mb-2 dark:text-orange-300">
           <Calculator className="w-5 h-5" />
           Analysis module unavailable
         </h3>
-        <p className="text-sm text-orange-700">
-          The object did not slide! To determine the kinetic friction coefficient, you must collect data from a successful slide. 
+        <p className="text-sm text-orange-700 dark:text-orange-300/90">
+          The object did not slide! To determine the kinetic friction coefficient, you must collect data from a successful slide.
           Try increasing the ramp angle or changing materials.
         </p>
       </div>
@@ -56,14 +55,13 @@ export function Analysis({ latestResult }: AnalysisProps) {
     const currentAttempts = attempts + 1;
     setAttempts(currentAttempts);
 
-    // Give a generous tolerance to account for rounding errors.
-    const tolerance = 0.05; 
+    const tolerance = 0.05;
     const diff = Math.abs(val - latestResult.calculatedMuk!);
 
     if (diff <= tolerance) {
       setStatus("success");
       setFeedback("Correct! You accurately determined the kinetic friction coefficient based on the experimental data.");
-      setShowSolution(true); // Show them their awesome work
+      setShowSolution(true);
     } else {
       setStatus("error");
       if (currentAttempts === 1) {
@@ -78,34 +76,34 @@ export function Analysis({ latestResult }: AnalysisProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full min-h-[200px]">
-      <div className="px-4 py-3 border-b border-slate-100 bg-blue-50/50">
-         <h3 className="font-bold text-slate-800 flex items-center gap-2">
-           <Calculator className="w-4 h-4 text-blue-600" />
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full min-h-[200px] dark:bg-slate-900 dark:border-slate-800">
+      <div className="px-4 py-3 border-b border-slate-100 bg-blue-50/50 dark:border-slate-800 dark:bg-slate-900/60">
+         <h3 className="font-bold text-slate-800 flex items-center gap-2 dark:text-slate-100">
+           <Calculator className="w-4 h-4 text-blue-600 dark:text-blue-400" />
            Determine Coefficient (Run #{latestResult.num})
          </h3>
       </div>
-      
-      <div className="p-4 flex-1 text-sm bg-slate-50/30 overflow-auto">
+
+      <div className="p-4 flex-1 text-sm bg-slate-50/30 overflow-auto dark:bg-slate-950/40">
         {!showSolution ? (
           <div className="space-y-4">
-            <p className="text-slate-600">
-              Using the data from <strong className="text-slate-800">Run #{latestResult.num}</strong>, calculate the coefficient of kinetic friction (<span className="font-mono">μ_k</span>).
+            <p className="text-slate-600 dark:text-slate-300">
+              Using the data from <strong className="text-slate-800 dark:text-slate-100">Run #{latestResult.num}</strong>, calculate the coefficient of kinetic friction (<span className="font-mono">μ_k</span>).
             </p>
-            
+
             <div>
-              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Your Calculation for μ_k</label>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 dark:text-slate-400">Your Calculation for μ_k</label>
               <div className="flex gap-2">
-                <input 
+                <input
                   type="number" step="0.01" placeholder="e.g. 0.25"
                   value={guess}
                   onChange={e => setGuess(e.target.value)}
-                  className="flex-1 border border-slate-300 rounded-md p-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm transition-shadow outline-none"
+                  className="flex-1 border border-slate-300 rounded-md p-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm transition-shadow outline-none bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 dark:focus:border-blue-400"
                   onKeyDown={e => e.key === 'Enter' && handleCheck()}
                 />
-                <button 
+                <button
                   onClick={handleCheck}
-                  className="bg-slate-800 text-white px-4 py-2 rounded-md hover:bg-slate-700 font-medium transition-colors whitespace-nowrap shadow-sm"
+                  className="bg-slate-800 text-white px-4 py-2 rounded-md hover:bg-slate-700 font-medium transition-colors whitespace-nowrap shadow-sm dark:bg-slate-700 dark:hover:bg-slate-600"
                 >
                   Verify
                 </button>
@@ -113,7 +111,7 @@ export function Analysis({ latestResult }: AnalysisProps) {
             </div>
 
             {status !== "idle" && (
-              <div className={`p-3 rounded-md text-sm border-l-4 ${status === 'error' ? 'bg-red-50 border-red-500 text-red-700' : 'bg-green-50 border-green-500 text-green-800'}`}>
+              <div className={`p-3 rounded-md text-sm border-l-4 ${status === 'error' ? 'bg-red-50 border-red-500 text-red-700 dark:bg-red-950/40 dark:border-red-500 dark:text-red-300' : 'bg-green-50 border-green-500 text-green-800 dark:bg-green-950/40 dark:border-green-500 dark:text-green-300'}`}>
                 {feedback}
               </div>
             )}
@@ -121,28 +119,28 @@ export function Analysis({ latestResult }: AnalysisProps) {
         ) : (
           <div className="space-y-4">
             {status === 'success' && (
-              <div className="p-3 bg-green-50 border border-green-200 text-green-800 rounded-md text-sm font-medium text-center">
+              <div className="p-3 bg-green-50 border border-green-200 text-green-800 rounded-md text-sm font-medium text-center dark:bg-green-950/40 dark:border-green-900 dark:text-green-300">
                 Excellent work! Your calculation was correct.
               </div>
             )}
             {status === 'error' && (
-              <div className="p-3 bg-slate-100 border border-slate-200 text-slate-700 rounded-md text-sm font-medium text-center">
+              <div className="p-3 bg-slate-100 border border-slate-200 text-slate-700 rounded-md text-sm font-medium text-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
                 Don't worry! Friction equations can be tricky. Here is the step-by-step calculation.
               </div>
             )}
 
-            <div className="bg-white border border-slate-200 rounded-md p-4 space-y-3 font-mono text-[13px] overflow-x-auto shadow-inner text-slate-700 leading-snug">
-              <p className="text-blue-600 font-sans font-bold text-sm border-b pb-2">Analysis Steps</p>
-              
+            <div className="bg-white border border-slate-200 rounded-md p-4 space-y-3 font-mono text-[13px] overflow-x-auto shadow-inner text-slate-700 leading-snug dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300">
+              <p className="text-blue-600 font-sans font-bold text-sm border-b pb-2 dark:text-blue-400 dark:border-slate-700">Analysis Steps</p>
+
               <div>
-                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold">1) Experimental inputs:</span><br/>
+                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold dark:text-slate-500">1) Experimental inputs:</span><br/>
                 θ = {latestResult.params.angle}°<br/>
                 d = {latestResult.params.distance.toFixed(2)} m<br/>
                 t = {latestResult.time.toFixed(3)} s
               </div>
 
               <div>
-                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold">2) Find acceleration (d = ½at²):</span><br/>
+                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold dark:text-slate-500">2) Find acceleration (d = ½at²):</span><br/>
                 a = (2 * {latestResult.params.distance.toFixed(2)}) / ({latestResult.time.toFixed(3)})²<br/>
                 {(() => {
                   const a = (2 * latestResult.params.distance) / (latestResult.time * latestResult.time);
@@ -151,28 +149,28 @@ export function Analysis({ latestResult }: AnalysisProps) {
               </div>
 
               <div>
-                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold">3) Newton's equations to isolate μ_k:</span><br/>
+                <span className="text-slate-400 font-sans text-xs uppercase tracking-wider font-semibold dark:text-slate-500">3) Newton's equations to isolate μ_k:</span><br/>
                 μ_k = (g·sin(θ) - a) / (g·cos(θ))<br/>
                 μ_k = (9.81 * sin({latestResult.params.angle}°) - {((2 * latestResult.params.distance) / (latestResult.time * latestResult.time)).toFixed(3)}) / (9.81 * cos({latestResult.params.angle}°))
               </div>
 
-              <div className="pt-2 border-t font-bold text-sm text-green-600">
+              <div className="pt-2 border-t font-bold text-sm text-green-600 dark:text-green-400 dark:border-slate-700">
                 μ_k ≈ {latestResult.calculatedMuk.toFixed(3)}
               </div>
-              <p className="text-slate-400 text-[10px] font-sans italic mt-1 leading-tight">
-                * Note: The true theoretical coefficient for these materials is {latestResult.trueMuk}. 
+              <p className="text-slate-400 text-[10px] font-sans italic mt-1 leading-tight dark:text-slate-500">
+                * Note: The true theoretical coefficient for these materials is {latestResult.trueMuk}.
                 Experimental error ({(Math.abs((latestResult.time / (latestResult.time/latestResult.noiseFactor)) - 1) * 100).toFixed(1)}%) was introducted to simulate real-world variance.
               </p>
             </div>
-            
-            <button 
+
+            <button
               onClick={() => {
                 setShowSolution(false);
                 setStatus("idle");
                 setGuess("");
                 setAttempts(0);
               }}
-              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium py-2 rounded-md transition-colors"
+              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium py-2 rounded-md transition-colors dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200"
             >
               Hide Solution and Try Again
             </button>
