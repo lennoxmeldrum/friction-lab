@@ -4,3 +4,12 @@
    `dark:` variants. Theme is toggled by main.tsx based on the `?theme=`
    URL parameter (initial) and `theme` postMessages from the parent frame. */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Page background lives on <body> instead of an inner min-h-screen wrapper.
+   When this app is embedded as an iframe and the parent auto-sizes the frame
+   to its content, a vh-based min-height on inner content causes oscillation
+   between the parent (sets frame = content height) and the child (uses the
+   frame height as 100vh). Putting the bg on <body> keeps the page filled in
+   the standalone view without forcing a min-height on inner content. */
+html, body { background-color: #f8fafc; } /* slate-50 */
+.dark, .dark body { background-color: #020617; } /* slate-950 */

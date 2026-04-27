@@ -60,7 +60,7 @@ export default function App() {
   const latestResult = results.length > 0 ? results[results.length - 1] : null;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-16 dark:bg-slate-950 dark:text-slate-200">
+    <div className="font-sans text-slate-800 pb-16 dark:text-slate-200">
       <header className="bg-white border-b border-slate-200 sticky top-0 z-20 dark:bg-slate-900 dark:border-slate-800">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
