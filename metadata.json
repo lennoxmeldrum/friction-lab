@@ -1,0 +1,6 @@
+{
+  "name": "Friction Lab",
+  "description": "An interactive physics app to experimentally determine the friction coefficient of various materials sliding down an inclined plane.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
