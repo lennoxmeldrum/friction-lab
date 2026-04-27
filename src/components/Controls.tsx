@@ -14,16 +14,23 @@ export function Controls({ state, setState, onRun, isRunning }: ControlsProps) {
     setState(prev => ({ ...prev, [field]: value }));
   };
 
+  const selectClasses =
+    "w-full border border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 " +
+    "bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 dark:focus:border-blue-400";
+
+  const rangeClasses =
+    "w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2 dark:bg-slate-700";
+
   return (
-    <div className="flex flex-col gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm mt-4 text-sm">
+    <div className="flex flex-col gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm mt-4 text-sm dark:bg-slate-900 dark:border-slate-800">
       <div className="grid grid-cols-2 gap-4">
         {/* Object Material */}
         <div>
-          <label className="block font-semibold text-slate-700 mb-1">Object Material</label>
-          <select 
+          <label className="block font-semibold text-slate-700 mb-1 dark:text-slate-200">Object Material</label>
+          <select
             value={state.objectMat}
             onChange={e => handleChange('objectMat', e.target.value)}
-            className="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+            className={selectClasses}
             disabled={isRunning}
           >
             {OBJECT_MATERIALS.map(m => <option key={m} value={m}>{m}</option>)}
@@ -32,11 +39,11 @@ export function Controls({ state, setState, onRun, isRunning }: ControlsProps) {
 
         {/* Ramp Material */}
         <div>
-          <label className="block font-semibold text-slate-700 mb-1">Ramp Material</label>
-          <select 
+          <label className="block font-semibold text-slate-700 mb-1 dark:text-slate-200">Ramp Material</label>
+          <select
             value={state.rampMat}
             onChange={e => handleChange('rampMat', e.target.value)}
-            className="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+            className={selectClasses}
             disabled={isRunning}
           >
             {RAMP_MATERIALS.map(m => <option key={m} value={m}>{m}</option>)}
@@ -47,14 +54,14 @@ export function Controls({ state, setState, onRun, isRunning }: ControlsProps) {
       <div className="grid grid-cols-2 gap-4">
         {/* Object Color (Distractor) */}
         <div>
-          <label className="block font-semibold text-slate-700 mb-1 flex justify-between">
+          <label className="block font-semibold text-slate-700 mb-1 flex justify-between dark:text-slate-200">
             <span>Color</span>
-            <span className="text-slate-400 font-normal text-xs">(Visual Only)</span>
+            <span className="text-slate-400 font-normal text-xs dark:text-slate-500">(Visual Only)</span>
           </label>
-          <select 
+          <select
             value={state.colorName}
             onChange={e => handleChange('colorName', e.target.value)}
-            className="w-full border-slate-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+            className={selectClasses}
             disabled={isRunning}
           >
             {COLORS.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
@@ -63,61 +70,61 @@ export function Controls({ state, setState, onRun, isRunning }: ControlsProps) {
 
         {/* Mass (Distractor) */}
         <div>
-          <label className="block font-semibold text-slate-700 mb-1 flex justify-between">
+          <label className="block font-semibold text-slate-700 mb-1 flex justify-between dark:text-slate-200">
             <span>Mass (kg)</span>
-            <span className="text-blue-600 w-8 text-right font-mono">{state.mass}</span>
+            <span className="text-blue-600 w-8 text-right font-mono dark:text-blue-400">{state.mass}</span>
           </label>
-          <input 
-            type="range" min="0.1" max="20" step="0.1" 
-            value={state.mass} 
+          <input
+            type="range" min="0.1" max="20" step="0.1"
+            value={state.mass}
             onChange={e => handleChange('mass', parseFloat(e.target.value))}
-            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2" 
+            className={rangeClasses}
             disabled={isRunning}
           />
         </div>
       </div>
 
-      <div className="border-t border-slate-100 pt-3">
+      <div className="border-t border-slate-100 pt-3 dark:border-slate-800">
         {/* Angle */}
         <div className="mb-4">
-          <label className="block font-semibold text-slate-700 mb-1 flex justify-between">
+          <label className="block font-semibold text-slate-700 mb-1 flex justify-between dark:text-slate-200">
             <span>Ramp Angle (θ)</span>
-            <span className="text-blue-600 font-mono">{state.angle}°</span>
+            <span className="text-blue-600 font-mono dark:text-blue-400">{state.angle}°</span>
           </label>
-          <input 
-            type="range" min="5" max="80" step="1" 
-            value={state.angle} 
+          <input
+            type="range" min="5" max="80" step="1"
+            value={state.angle}
             onChange={e => handleChange('angle', parseInt(e.target.value))}
-            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2" 
+            className={rangeClasses}
             disabled={isRunning}
           />
         </div>
 
         {/* Distance */}
         <div className="mb-4">
-          <label className="block font-semibold text-slate-700 mb-1 flex justify-between">
+          <label className="block font-semibold text-slate-700 mb-1 flex justify-between dark:text-slate-200">
             <span>Sliding Distance (Δx)</span>
-            <span className="text-blue-600 font-mono">{state.distance.toFixed(1)} m</span>
+            <span className="text-blue-600 font-mono dark:text-blue-400">{state.distance.toFixed(1)} m</span>
           </label>
-          <input 
-            type="range" min="1" max="10" step="0.5" 
-            value={state.distance} 
+          <input
+            type="range" min="1" max="10" step="0.5"
+            value={state.distance}
             onChange={e => handleChange('distance', parseFloat(e.target.value))}
-            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2" 
+            className={rangeClasses}
             disabled={isRunning}
           />
         </div>
       </div>
 
-      <button 
+      <button
         onClick={onRun}
         disabled={isRunning}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors focus:ring-4 focus:ring-blue-300 disabled:opacity-50 mt-2 flex items-center justify-center gap-2 uppercase tracking-wide"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors focus:ring-4 focus:ring-blue-300 disabled:opacity-50 mt-2 flex items-center justify-center gap-2 uppercase tracking-wide dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-blue-700"
       >
         Run Experiment
       </button>
 
-      <p className="text-xs text-slate-400 text-center mt-1">Hint: Ensure the angle is steep enough to overcome static friction!</p>
+      <p className="text-xs text-slate-400 text-center mt-1 dark:text-slate-500">Hint: Ensure the angle is steep enough to overcome static friction!</p>
     </div>
   );
 }
